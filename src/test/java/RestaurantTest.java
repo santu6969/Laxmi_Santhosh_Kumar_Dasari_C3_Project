@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
@@ -87,4 +88,26 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    //<<<<<<<<<<<<<<<<<<<<<<<ITEM SELECTION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    @Test
+    public void select_menu_items_should_display_total_cost_of_selected_items() throws itemNotFoundException {
+        ArrayList<String> selectedItems = new ArrayList<String>();
+        selectedItems.add("Sweet corn soup");
+        selectedItems.add("Vegetable lasagne");
+
+        String totalCost = restaurant.selectMenuItems(selectedItems);
+        assertEquals("Your order will cost: ₹388", totalCost);
+    }
+
+    @Test
+    public void select_menu_items_should_throw_item_not_found_exception_when_any_selected_item_is_unavailable() {
+        ArrayList<String> selectedItems = new ArrayList<String>();
+        selectedItems.add("Pizza");
+        selectedItems.add("Vegetable lasagne");
+
+        assertThrows(itemNotFoundException.class, () -> restaurant.selectMenuItems(selectedItems));
+    }
+
+    //<<<<<<<<<<<<<<<<<<<<<<<ITEM SELECTION>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 }
