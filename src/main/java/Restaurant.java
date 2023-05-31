@@ -61,4 +61,19 @@ public class Restaurant {
         return name;
     }
 
+    public int calculateSelectedItemsTotalCost(ArrayList<String> selectItems) throws itemNotFoundException{
+        try{
+            int totalCost = 0;
+            for (String itemName : selectItems) {
+                Item item = findItemByName(itemName);
+                totalCost += item.getPrice();
+            }
+            return totalCost;
+        } catch (Exception e){
+            throw new itemNotFoundException("item not found");
+        }
+    }
+    public String selectMenuItems(ArrayList<String> selectedItems) throws itemNotFoundException  {
+        return ("Your order will cost: ₹" +  this.calculateSelectedItemsTotalCost(selectedItems));
+    }
 }
